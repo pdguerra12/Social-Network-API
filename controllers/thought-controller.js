@@ -2,7 +2,7 @@ const { User, Thought } = require("../models");
 
 const thoughtController = {
 	// get all thoughts
-	getAllThought(req, res) {
+	getAllThoughts(req, res) {
 		Thought.find({})
 			.select("-__v")
 			.sort({ createdAt: -1 })
