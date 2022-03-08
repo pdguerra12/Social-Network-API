@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 const { User, Thought } = require("../models");
 
 const userController = {
@@ -59,12 +60,9 @@ const userController = {
 
 	updateUser({ params, body }, res) {
 		User.findOneAndUpdate(
-			{ _id: params.id },
+			{ _id: params.userId },
 			{ $set: body },
-			{
-				new: true,
-				runValidators: true,
-			}
+			{ new: true, runValidators: true }
 		)
 			.then((dbUserData) => {
 				if (!dbUserData) {
@@ -73,11 +71,11 @@ const userController = {
 				}
 				res.json(dbUserData);
 			})
-			.catch((err) => res.status(400).json(err));
+			.catch((err) => res.json(err));
 	},
 
 	deleteUser({ params }, res) {
-		User.findOneAndDelete({ _id: params.id })
+		User.findOneAndDelete({ _id: params.userId })
 			.then((dbUserData) => {
 				if (!dbUserData) {
 					return res
